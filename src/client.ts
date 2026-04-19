@@ -79,7 +79,9 @@ export class VerifIPClient {
         this.updateRateLimit(response.headers);
 
         if (response.ok) {
-          return (await response.json()) as T;
+          const result = (await response.json()) as T;
+          clearTimeout(timer);
+          return result;
         }
 
         const errorData = (await response.json().catch(() => ({}))) as Partial<ErrorResponse>;
