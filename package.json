@@ -1,0 +1,29 @@
+{
+  "name": "verifip",
+  "version": "0.1.0",
+  "description": "Official TypeScript/JavaScript SDK for the VerifIP IP fraud scoring API",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --experimental-vm-modules node_modules/.bin/vitest run",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": ["ip", "fraud", "security", "vpn", "tor", "proxy", "verifip"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "typescript": "^5.5",
+    "vitest": "^2.0"
+  }
+}
