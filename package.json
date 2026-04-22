@@ -1,6 +1,6 @@
 {
   "name": "verifip",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Official TypeScript/JavaScript SDK for the VerifIP IP fraud scoring API",
   "type": "module",
   "main": "./dist/index.js",
