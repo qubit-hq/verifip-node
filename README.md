@@ -88,3 +88,10 @@ if (client.rateLimit) {
 
 - Node.js 18+ (uses built-in `fetch`)
 - Zero runtime dependencies
+
+## Links
+
+- [API Documentation](https://verifip.com/docs)
+- [GitHub](https://github.com/qubit-hq/verifip-node)
+- [npm](https://www.npmjs.com/package/verifip)
+- [Changelog](https://github.com/qubit-hq/verifip-node/releases)
