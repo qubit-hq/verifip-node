@@ -1,11 +1,17 @@
 import { makeError, VerifIPError } from "./errors";
 import {
+  AssessResponse,
   BatchResponse,
   CheckResponse,
+  EmailResponse,
   ErrorResponse,
   HealthResponse,
+  PhoneResponse,
   RateLimitInfo,
+  ReportResponse,
+  URLResponse,
   VerifIPClientOptions,
+  WHOISResponse,
 } from "./types";
 import { VERSION } from "./version";
 
@@ -46,6 +52,44 @@ export class VerifIPClient {
 
   async health(): Promise<HealthResponse> {
     return this.request<HealthResponse>("GET", "/health", undefined, false);
+  }
+
+  async checkEmail(email: string): Promise<EmailResponse> {
+    if (!email) throw new Error("email is required");
+    return this.request<EmailResponse>("GET", `/v1/email?email=${encodeURIComponent(email)}`);
+  }
+
+  async checkPhone(phone: string): Promise<PhoneResponse> {
+    if (!phone) throw new Error("phone is required");
+    return this.request<PhoneResponse>("GET", `/v1/phone?phone=${encodeURIComponent(phone)}`);
+  }
+
+  async checkUrl(url: string): Promise<URLResponse> {
+    if (!url) throw new Error("url is required");
+    return this.request<URLResponse>("GET", `/v1/url?url=${encodeURIComponent(url)}`);
+  }
+
+  async checkWhois(ip: string): Promise<WHOISResponse> {
+    if (!ip) throw new Error("ip is required");
+    return this.request<WHOISResponse>("GET", `/v1/whois?ip=${encodeURIComponent(ip)}`);
+  }
+
+  async report(ip: string, isFraud: boolean, category?: string, comment?: string): Promise<ReportResponse> {
+    if (!ip) throw new Error("ip is required");
+    const body: Record<string, unknown> = { ip, is_fraud: isFraud };
+    if (category) body.category = category;
+    if (comment) body.comment = comment;
+    return this.request<ReportResponse>("POST", "/v1/report", body);
+  }
+
+  async assess(options: { ip?: string; email?: string; phone?: string; url?: string }): Promise<AssessResponse> {
+    const params = new URLSearchParams();
+    if (options.ip) params.set("ip", options.ip);
+    if (options.email) params.set("email", options.email);
+    if (options.phone) params.set("phone", options.phone);
+    if (options.url) params.set("url", options.url);
+    if (!params.toString()) throw new Error("at least one parameter required");
+    return this.request<AssessResponse>("GET", `/v1/assess?${params.toString()}`);
   }
 
   private async request<T>(

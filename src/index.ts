@@ -15,5 +15,11 @@ export type {
   ConnectionType,
   ErrorResponse,
   BatchRequest,
+  EmailResponse,
+  PhoneResponse,
+  URLResponse,
+  WHOISResponse,
+  ReportResponse,
+  AssessResponse,
 } from "./types";
 export { VERSION } from "./version";
